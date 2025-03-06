@@ -48,9 +48,27 @@ public class Infrastructure {
     }
 
     private void parseInformation() {
-        // TODO: Get the first 20 news from the articles array of the json result
-        //  and parse the information of each on of them to be mapped to News class
-        //  finally add them to newsList in this class to display them in the output
+        if(JSONRESULT == null) {
+            System.out.println("there is no information to show :(");
+            return;
+        }
+
+        JSONObject obj = new JSONObject(JSONRESULT);
+        JSONArray articles = obj.getJSONArray("articles");
+        int count = Math.min(articles.length(), 20);
+        for (int i = 0; i < count; i++) {
+
+            JSONObject article = articles.getJSONObject(i);
+
+            String title = article.optString("title" , "no title");
+            String author = article.optString("author" , "unknown author");
+            String description = article.optString("description" , "no description");
+            String publishedAt = article.optString("publish Date" , "unknown date");
+            String url = article.optString("url" , "no url");
+            String sourceName = article.optString("source" , "unknown source");
+
+            newsList.add(new News(title , description , author , sourceName , url , publishedAt ));
+        }
     }
 
     public void displayNewsList() {
