@@ -7,6 +7,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class Infrastructure {
@@ -72,9 +73,22 @@ public class Infrastructure {
     }
 
     public void displayNewsList() {
-        // TODO: Display titles of the news you got from api
-        //  and print them in a way that user can choose one
-        //  to see the full information of the news
+        if(newsList.isEmpty()) {
+            System.out.println("there is no news to show :(");
+            return;
+        }
+        System.out.println("top 20 Available Articles : \n");
+        for(int i = 0; i < newsList.size(); i++) {
+            System.out.println((i + 1) + ". " + newsList.get(i).getTitle());
+        }
+        System.out.println("which article do you want to show : ");
+        Scanner scanner = new Scanner(System.in);
+        int input = scanner.nextInt();
+        if(input >= 1 && input <= 20) {
+            System.out.println(newsList.get(input - 1));
+        }
+        else
+            System.out.println("please enter a valid number");
     }
 
 }
