@@ -9,6 +9,7 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDate;
+import java.io.IOException;
 
 
 public class Infrastructure {
@@ -75,7 +76,7 @@ public class Infrastructure {
         }
     }
 
-    public void displayNewsList() {
+    public void displayNewsList() throws IOException {
         if(newsList.isEmpty()) {
             System.out.println("there is no news to show :(");
             return;
@@ -88,7 +89,11 @@ public class Infrastructure {
         Scanner scanner = new Scanner(System.in);
         int input = scanner.nextInt();
         if(input >= 1 && input <= 20) {
-            System.out.println(newsList.get(input - 1));
+            newsList.get(input-1).displayNews();
+            System.out.println("press enter to continue");
+            char ch = (char) System.in.read();
+            if(ch == '\n')
+                displayNewsList();
         }
         else
             System.out.println("please enter a valid number");
