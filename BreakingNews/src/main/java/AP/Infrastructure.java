@@ -19,6 +19,13 @@ public class Infrastructure {
     private final String JSONRESULT;
     private ArrayList<News> newsList; // TODO: Create the News class
 
+    public static void clearConsole() {
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException ex) {
+            System.out.println("\nOOPS\n");
+        }
+    }
 
     public Infrastructure(String APIKEY) {
         this.APIKEY = APIKEY;
@@ -92,8 +99,16 @@ public class Infrastructure {
             newsList.get(input-1).displayNews();
             System.out.println("press enter to continue");
             char ch = (char) System.in.read();
-            if(ch == '\n')
+            if(ch == '\n' || ch == '\r')
+            {
+                System.in.read();
+                clearConsole();
                 displayNewsList();
+            }
+            else
+            {
+                System.out.println("Bye!!!");
+            }
         }
         else
             System.out.println("please enter a valid number");

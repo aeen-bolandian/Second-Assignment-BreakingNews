@@ -1,7 +1,16 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
+application {
+    mainClass = 'AP.Main'
+}
+jar {
+    manifest {
+        attributes 'Main-Class': 'AP.Main'
+    }
+}
 group = 'AP'
 version = '1.0-SNAPSHOT'
 
@@ -13,6 +22,20 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation 'org.json:json:20210307'
+}
+
+tasks.withType(JavaExec) {
+    standardInput = System.in
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'AP.Main'
+    }
+    archiveBaseName.set('yourapp')
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
 
 test {

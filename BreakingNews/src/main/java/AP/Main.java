@@ -6,4 +6,5 @@ public class Main {
         Infrastructure infrastructure = new Infrastructure(API_KEY);
         infrastructure.displayNewsList();
     }
+
 }
