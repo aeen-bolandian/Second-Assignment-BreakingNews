@@ -1,4 +1,4 @@
-plugins {
+ plugins {
     id 'java'
     id 'application'
 }
@@ -28,15 +28,15 @@ tasks.withType(JavaExec) {
     standardInput = System.in
 }
 
-task fatJar(type: Jar) {
-    manifest {
-        attributes 'Main-Class': 'AP.Main'
-    }
-    archiveBaseName.set('yourapp')
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
-}
+ tasks.register('fatJar', Jar) {
+     manifest {
+         attributes 'Main-Class': 'AP.Main'
+     }
+     archiveBaseName.set('yourapp')
+     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+     from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+     with jar
+ }
 
 test {
     useJUnitPlatform()
